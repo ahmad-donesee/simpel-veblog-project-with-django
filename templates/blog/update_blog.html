@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<ul>
+      <li>{{blog.title}}</li>
+      <li>{{blog.content}}</li>
+      <li>{{blog.author}}</li>
+      <li>{{blog.id}}</li>
+</ul>
+  <h1>update blog</h1>
+  <form action="" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" value="update">update</button>
+  </form>
+{% endblock content %}

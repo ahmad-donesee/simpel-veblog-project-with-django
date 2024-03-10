@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}
+<h1>blog detail</h1>
+<hr style="height:5px;background-color:black">
+{% endblock title %}
+{% block content %}
+
+<div class="container">
+  <div class="row" style="background-color: blue; width:80%">
+    <div style="padding:10px">
+      <div class="row" style="background-color: aqua;padding:10px;margin:10px">
+        <div class="col-8 col-sm-6">
+          <ul>
+            <li>title:{{blogs.title}}</li>
+            <li>author:{{blogs.author}}</li>
+            <li>content:{{blogs.content}}</li>
+            <li>id:{{blogs.id}}</li>
+            {% if user.username == blogs.author.username %}
+            <a href="{% url 'blog:delete_blog' blogs.id %}">delete</a>
+            <br>
+            <a href="{% url  'blog:update_blog' blogs.id %}">edit</a>
+            {% endif %}
+            <!-- {% if user.username == blog.author.username  %}
+                    <a href="{% url 'blog:delete_blog' %}">delete</a>
+                    <br>
+                    <a href="{% url  'blog:update_blog' %}">edit</a>
+                    {% endif %} -->
+
+          </ul>
+        </div>
+      </div>
+      <div class="row" style="background-color: aqua;padding:10px;margin: 10px;">
+        <div class="col-8 col-sm-6">
+          {% comment %} {% if user.is_authenticated %}
+          <h2><a href="{% url 'register:logout_view' %}">logout</a></h2>
+
+          {% endif %} {% endcomment %}
+
+          <h1>all comment:</h1>
+          <div class="container">
+            <div class="container">
+              {% if not user.is_authenticated %}
+              <h2>you can add your comment for blog after login: <a href="{% url 'register:login_view' %}">login</a>
+              </h2>
+              {% else %}
+              <form action="" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="formGroupExampleInput2">your comment:</label>
+                  <textarea style="height: 150px; width:400px" name="content" id="" cols="30" rows="10"></textarea>
+                  <input type="submit" class="btn btn-primary" value="add">
+                </div>
+              </form>
+              {% endif %}
+            <!-- </div> -->
+            <div class="row overflow-scroll mt-5" style="background-color:bisque; width:400px;height:200px">
+              <div class="col-8 col-sm-6">
+                {% for comment in comment %}
+                <li>name:{{comment.name}}</li>
+                <li>content:{{comment.content}}</li>
+                <br>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- class="col-sm-9"  -->
+
+</div>
+<br>
+
+
+
+{% endblock content %}
